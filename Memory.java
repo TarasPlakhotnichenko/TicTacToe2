@@ -10,9 +10,9 @@ import java.util.Map;
 import java.lang.Math;
 
 
-public class Memory {
+public  class Memory {
     private final int dim = 3; //arbitrary digit != 1 or 0; for initial grid filling
-    private final HashMap<Integer, Integer> playField = new HashMap<>();
+    private HashMap<Integer, Integer> playField = new HashMap<>();
     private final List<Integer> btns; //list of buttons
     private int theWinner;
 
@@ -79,7 +79,7 @@ public class Memory {
     }
 
     //Here we define a winner by checking out X or O triples or whatever it could be named when lining up a character in one row, column or diag
-    public  boolean isWinner() {
+    public   boolean isWinner() {
         List<Integer> triple = new ArrayList<>();
         int oneSideDimention = (int) Math.sqrt(btns.size());
         int upperBoundery = oneSideDimention;
@@ -100,7 +100,7 @@ public class Memory {
                 if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
                     this.theWinner = 1;
                     return true;
-                } else {
+                } else if ((( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(0) ))) {
                     this.theWinner = 0;
                     return true;
                 }
@@ -110,6 +110,7 @@ public class Memory {
             //row-------------------^^^
         }
         //rows----------------------------------------------------------^^^
+
 
         //columns--------------------------------------------------------vvv
         i = 0;
@@ -128,7 +129,7 @@ public class Memory {
             if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
                 this.theWinner = 1;
                 return true;
-            } else {
+            } else if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(0) )) {
                 this.theWinner = 0;
                 return true;
             }
@@ -150,10 +151,10 @@ public class Memory {
     public String getTheWinner() {
         if (this.theWinner == 1) {
             return "X";
-        } else {
+        } else if (this.theWinner == 0) {
             return "0";
         }
-
+        return "-";
     }
 
     //Is it all the grid filled?
