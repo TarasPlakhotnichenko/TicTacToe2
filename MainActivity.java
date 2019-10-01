@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
             memory.addAnswer(view.getId(), 1);
             ( (Button) view ).setText("X");
+
             if (!memory.isFinish() && !memory.isWinner()) {
                 //int computerMove = memory.rnd();
                 //Toast.makeText(this, "Computer tapped: " + computerMove, Toast.LENGTH_LONG).show();
@@ -107,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (memory.getTheWinner() != null)
                 {
+                    Button btn = MainActivity.this.findViewById(memory.rnd());
+                    ( (Button) btn ).setText("0");
                     Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(this, "Game over: parity", Toast.LENGTH_LONG).show();
                 }
-
             }
-
         } else {
             Toast.makeText(this, String.valueOf(view.getId()) + " illegal move", Toast.LENGTH_LONG).show();
         }

@@ -78,24 +78,54 @@ public class Memory {
         return true;
     }
 
-    //Here we define a winner by checking out X or O triples or whatever it could be called when lining up a character in one row,column or diag
+    //Here we define a winner by checking out X or O triples or whatever it could be named when lining up a character in one row, column or diag
     public  boolean isWinner() {
         List<Integer> triple = new ArrayList<>();
         int oneSideDimention = (int) Math.sqrt(btns.size());
+        int upperBoundery = oneSideDimention;
 
         //rows----------------------------------------------------------vvv
-        //for (int j = 0; j < oneSideDimention; j++) {
-        //row-------------------vvv
-        for (int i = 0; i < oneSideDimention; i++) {
+        int i = 0;
+        for (int j = 0; j < oneSideDimention; j++) {
+            //row-------------------vvv
+            for (; i < upperBoundery; i++) {
+                for (Map.Entry<Integer, Integer> entry : this.playField.entrySet()) {
+                    if (( entry.getKey().equals(btns.get(i)) ) && ( ( entry.getValue().equals(1) ) || ( entry.getValue().equals(0) ) )) {
+                        triple.add(entry.getValue());
+                    }
+                }
+            }
+
+            if (oneSideDimention == triple.size()) {
+                if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
+                    this.theWinner = 1;
+                    return true;
+                } else {
+                    this.theWinner = 0;
+                    return true;
+                }
+            }
+            triple.clear();
+            upperBoundery = i + oneSideDimention;
+            //row-------------------^^^
+        }
+        //rows----------------------------------------------------------^^^
+
+        //columns--------------------------------------------------------vvv
+        i = 0;
+        for (int j = 0; j < oneSideDimention; j++) {
+        i=j;
+        //column--------------------------------------------------------vvv
+        for (; i < btns.size(); i += oneSideDimention) {
             for (Map.Entry<Integer, Integer> entry : this.playField.entrySet()) {
-                if ((entry.getKey().equals(btns.get(i))) && ((entry.getValue().equals(1)) || (entry.getValue().equals(0))) ) {
+                if (( entry.getKey().equals(btns.get(i)) ) && ( ( entry.getValue().equals(1) ) || ( entry.getValue().equals(0) ) )) {
                     triple.add(entry.getValue());
                 }
             }
         }
 
-        if ( oneSideDimention  == triple.size()) {
-            if ((triple.get(0).equals(triple.get(1))) && (triple.get(0).equals(triple.get(2))) && (triple.get(0).equals(1)) ) {
+        if (oneSideDimention == triple.size()) {
+            if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
                 this.theWinner = 1;
                 return true;
             } else {
@@ -103,11 +133,15 @@ public class Memory {
                 return true;
             }
         }
+        triple.clear();
+        //column--------------------------------------------------------vvv
+        }
+        //columns--------------------------------------------------------^^^
 
-        //row-------------------^^^
-       // }
-        //rows----------------------------------------------------------^^^
-        //to be continued
+
+        //diag
+        //diag1--------------------------------------------------------vvv
+        //diag1--------------------------------------------------------^^^
 
 
         return false;
