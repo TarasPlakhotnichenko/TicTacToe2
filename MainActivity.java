@@ -7,29 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-
-
-
+import android.util.Log;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle state) {
@@ -119,16 +112,39 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (memory.isWinner()) {
-                    Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
+                    msg("Game over: " + memory.getTheWinner() + " wins");
                 }
             }
             else {
-                Toast.makeText(this, "Game over: parity", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Game over: parity", Toast.LENGTH_LONG).show();
+                msg("Game over: parity");
             }
         } else {
             Toast.makeText(this, String.valueOf(view.getId()) + " illegal move", Toast.LENGTH_LONG).show();
         }
 
     }
+
+
+    private void msg(String text) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogBuilder.setTitle("Game Results");
+
+        alertDialogBuilder
+                .setMessage(text)
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        setContentView(R.layout.activity_main);
+                        //onStart();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 }
 
