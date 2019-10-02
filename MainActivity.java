@@ -96,63 +96,35 @@ public class MainActivity extends AppCompatActivity {
     public void answer(View view) {
 
         if (memory.checkLegalMove(view.getId())) {
-            //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
+
             //Toast.makeText(this, "Button tapped-: " + memory.getTheWinner(), Toast.LENGTH_LONG).show();
 
-            //if (memory.getTheWinner().equals("0"))
-            if (!memory.isFinish()) {
-                if (true) {
 
-                if (!memory.isWinner()) {
+            if (!memory.isFinish()) {
+                //you
+                if (memory.getTheWinner().equals("-")) {
                     memory.addAnswer(view.getId(), 1);
                     ( (Button) view ).setText("X");
+                    //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
                 }
-
-
-                if (!memory.isWinner()) {
-                    Button btn = MainActivity.this.findViewById(memory.rnd());
-                    ( (Button) btn ).setText("0");
-                }
-                }
-                else {
-                    //Toast.makeText(this, "Button tapped-: " + memory.getTheWinner(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
-                }
-            }
-            else {
-                Toast.makeText(this, "Game over: all cells are filled", Toast.LENGTH_LONG).show();
-            }
-
-            //}
-
-
-            //if (!memory.isWinner()) {
-            //    Button btn = MainActivity.this.findViewById(memory.rnd());
-            //   ( (Button) btn ).setText("0");
-            //}
-
-            /*
-            if (!memory.isFinish() && !memory.isWinner()) {
-                //int computerMove = memory.rnd();
-                //Toast.makeText(this, "Computer tapped: " + computerMove, Toast.LENGTH_LONG).show();
-                Button btn = MainActivity.this.findViewById(memory.rnd());
-                ( (Button) btn ).setText("0");
 
                 if (memory.isWinner()) {
                     Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
                 }
-            } else {
-                if (memory.getTheWinner() != null)
-                {
+                //Computer
+                if (memory.getTheWinner().equals("-")) {
+                    Button btn = MainActivity.this.findViewById(memory.rnd());
+                    ( (Button) btn ).setText("0");
+                    //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
+                }
 
+                if (memory.isWinner()) {
                     Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
                 }
-                else {
-                    Toast.makeText(this, "Game over: parity", Toast.LENGTH_LONG).show();
-                }
             }
-            */
-
+            else {
+                Toast.makeText(this, "Game over: parity", Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(this, String.valueOf(view.getId()) + " illegal move", Toast.LENGTH_LONG).show();
         }

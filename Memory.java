@@ -21,6 +21,7 @@ public  class Memory {
             for (int i = 0; i < btns.size(); i++) {
                 this.playField.put(btns.get(i), dim );
             }
+        this.theWinner = 3;
         this.btns = btns;
     }
 
