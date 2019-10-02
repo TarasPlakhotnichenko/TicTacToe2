@@ -1,6 +1,8 @@
-package ru.tarasplakhotnichenko.tictactoe2;
+package ru.tarasplakhotnichenko.tictactoe3;
 
-import java.util.HashSet;
+//import java.util.HashSet;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +15,13 @@ public  class Memory {
     private final int dim = 3; //arbitrary digit != 1 or 0; for initial grid filling
     private HashMap<Integer, Integer> playField = new HashMap<>();
     private final List<Integer> btns; //list of buttons
-    private int theWinner;
+    private int theWinner; //1 or 0 if someone wins, 3 - in other cases by default
 
 
     public Memory(List<Integer> btns) {
-            for (int i = 0; i < btns.size(); i++) {
-                this.playField.put(btns.get(i), dim );
-            }
+        for (int i = 0; i < btns.size(); i++) {
+            this.playField.put(btns.get(i), dim );
+        }
         this.theWinner = 3;
         this.btns = btns;
     }
@@ -62,8 +64,8 @@ public  class Memory {
 
     public  HashMap<Integer, Integer> restoreCurPlayField(ArrayList<Integer> pf) {
         for (int i = 0; i < pf.size()-1; i++) {
-           this.playField.put(pf.get(i),pf.get(i+1));
-           i++;
+            this.playField.put(pf.get(i),pf.get(i+1));
+            i++;
         }
         return this.playField;
     }
@@ -72,7 +74,7 @@ public  class Memory {
     public  boolean checkLegalMove (Integer id) {
         for (Map.Entry<Integer, Integer> entry : this.playField.entrySet()) {
             if (entry.getKey().equals(id) && (entry.getValue().equals(1) || entry.getValue().equals(0)) ) {
-                 return false;
+                return false;
             }
         }
         return true;
@@ -115,9 +117,65 @@ public  class Memory {
         //columns--------------------------------------------------------vvv
         i = 0;
         for (int j = 0; j < oneSideDimention; j++) {
-        i=j;
-        //column--------------------------------------------------------vvv
-        for (; i < btns.size(); i += oneSideDimention) {
+            i=j;
+            //column--------------------------------------------------------vvv
+            for (; i < btns.size(); i += oneSideDimention) {
+                for (Map.Entry<Integer, Integer> entry : this.playField.entrySet()) {
+                    if (( entry.getKey().equals(btns.get(i)) ) && ( ( entry.getValue().equals(1) ) || ( entry.getValue().equals(0) ) )) {
+                        triple.add(entry.getValue());
+                    }
+                }
+            }
+
+            if (oneSideDimention == triple.size()) {
+                if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
+                    this.theWinner = 1;
+                    return true;
+                } else if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(0) )) {
+                    this.theWinner = 0;
+                    return true;
+                }
+            }
+            triple.clear();
+            //column--------------------------------------------------------vvv
+        }
+        //columns--------------------------------------------------------^^^
+
+
+        //diag
+        //diag - backward slash--------------------------------------------------------vvv
+        i = 0;
+        int shift = oneSideDimention;
+        shift++;
+        for (; i < btns.size(); i += shift) {
+            for (Map.Entry<Integer, Integer> entry : this.playField.entrySet()) {
+                if (( entry.getKey().equals(btns.get(i)) ) && ( ( entry.getValue().equals(1) ) || ( entry.getValue().equals(0) ) )) {
+                    triple.add(entry.getValue());
+                }
+            }
+        }
+        if (oneSideDimention == triple.size()) {
+            //Log.i(MainActivity.class.getName(), String.valueOf(triple.get(0)) + " " + String.valueOf(triple.get(1)) + " " + String.valueOf(triple.get(2)));
+            if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
+
+                this.theWinner = 1;
+                return true;
+            } else if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(0) )) {
+
+                this.theWinner = 0;
+                return true;
+            }
+        }
+        triple.clear();
+        //diag - backward slash--------------------------------------------------------^^^
+
+
+        //diag - forward slash--------------------------------------------------------vvv
+
+        shift = oneSideDimention;
+        shift--;
+        i = shift;
+        for (; i < btns.size(); i += shift) {
             for (Map.Entry<Integer, Integer> entry : this.playField.entrySet()) {
                 if (( entry.getKey().equals(btns.get(i)) ) && ( ( entry.getValue().equals(1) ) || ( entry.getValue().equals(0) ) )) {
                     triple.add(entry.getValue());
@@ -126,23 +184,19 @@ public  class Memory {
         }
 
         if (oneSideDimention == triple.size()) {
+            //Log.i(MainActivity.class.getName(), String.valueOf(triple.get(0)) + " " + String.valueOf(triple.get(1)) + " " + String.valueOf(triple.get(2)));
             if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(1) )) {
+
                 this.theWinner = 1;
                 return true;
             } else if (( triple.get(0).equals(triple.get(1)) ) && ( triple.get(0).equals(triple.get(2)) ) && ( triple.get(0).equals(0) )) {
+
                 this.theWinner = 0;
                 return true;
             }
         }
         triple.clear();
-        //column--------------------------------------------------------vvv
-        }
-        //columns--------------------------------------------------------^^^
-
-
-        //diag
-        //diag1--------------------------------------------------------vvv
-        //diag1--------------------------------------------------------^^^
+        //diag - forward slash--------------------------------------------------------^^^
 
 
         return false;
@@ -175,7 +229,7 @@ public  class Memory {
 
 
 
-    }
+}
 
 
 

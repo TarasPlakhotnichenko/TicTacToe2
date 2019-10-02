@@ -1,4 +1,4 @@
-package ru.tarasplakhotnichenko.tictactoe2;
+package ru.tarasplakhotnichenko.tictactoe3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
@@ -101,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
                 }
 
-                if (memory.isWinner()) {
-                    Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
-                }
                 //Computer
                 if (memory.getTheWinner().equals("-")) {
                     Button btn = MainActivity.this.findViewById(memory.rnd());
@@ -137,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        setContentView(R.layout.activity_main);
+                        //setContentView(R.layout.activity_main);
                         //onStart();
                     }
                 });
@@ -147,4 +144,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
 
