@@ -87,18 +87,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void answer(View view) {
-
         if (memory.checkLegalMove(view.getId())) {
-
             //Toast.makeText(this, "Button tapped-: " + memory.getTheWinner(), Toast.LENGTH_LONG).show();
-
-
             if (!memory.isFinish()) {
                 //you
                 if (memory.getTheWinner().equals("-")) {
                     memory.addAnswer(view.getId(), 1);
                     ( (Button) view ).setText("X");
                     //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
+                }
+
+                if (memory.getTheWinner().equals("-")) {
+                    if (memory.isWinner()) {
+                        //Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
+                        msg("Game over: " + memory.getTheWinner() + " wins");
+                    }
                 }
 
                 //Computer
@@ -108,9 +111,11 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(this, "Button tapped: " + String.valueOf(view.getId()), Toast.LENGTH_LONG).show();
                 }
 
-                if (memory.isWinner()) {
-                    //Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
-                    msg("Game over: " + memory.getTheWinner() + " wins");
+                if (memory.getTheWinner().equals("-")) {
+                    if (memory.isWinner()) {
+                        //Toast.makeText(this, "Game over " + memory.getTheWinner() + " wins", Toast.LENGTH_LONG).show();
+                        msg("Game over: " + memory.getTheWinner() + " wins");
+                    }
                 }
             }
             else {
@@ -134,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //setContentView(R.layout.activity_main);
-                        //onStart();
+
                     }
                 });
 
